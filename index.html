@@ -1,0 +1,517 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Filter Images based on selection</title>
+  <meta name="description" content="Filter Images based on selection">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <style>
+
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  .wrapper {
+    min-width: 700px;
+    width: 700px;
+    margin: 0 auto;
+  }
+
+
+  /*grid*/
+  .row:after {
+    display: table;
+    content: " ";
+    clear: both;
+  }
+
+  .col1, .col10, .col11, .col12, .col2, .col3, .col4, .col5, .col6, .col7, .col8, .col9 {
+    float: left;
+  }
+
+  .col1 {
+    width: 8.333333333333336%;
+  }
+
+  .col2 {
+    width: 16.666666666666667%;
+  }
+
+  .col3 {
+    width: 25%;
+  }
+
+  .col4 {
+    width: 33.333333333333336%;
+  }
+
+  .col5 {
+    width: 41.66666666666667%;
+  }
+
+  .col6 {
+    width: 50%;
+  }
+
+  .col7 {
+    width: 58.333333333333336%;
+  }
+
+  .col8 {
+    width: 66.66666666666667%;
+  }
+
+  .col9 {
+    width: 75%;
+  }
+
+  .col10 {
+    width: 83.33333333333336%;
+  }
+
+  .col11 {
+    width: 91.66666666666667%;
+  }
+
+  .col12 {
+    width: 100%;
+  }
+
+@media only screen and (max-width: 700px) {
+  .col1, .col2, .col3, .col4, .col5, .col6, .col7, .col8, .col9, .col10, .col11, .col12 {
+    width: 100%;
+  }
+  .wrapper {
+    width: 100%;
+    min-width: 100%;
+    margin: auto;
+  }
+}
+
+
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+
+}
+
+label.checkbox-label {
+  display: block;
+  cursor: pointer;
+}
+
+label.checkbox-label:hover {
+  background: #DDD;
+}
+
+label.checkbox-label input[type=checkbox]{
+  vertical-align: middle;
+  bottom: 1px;
+}
+
+#accordion {
+  width: 100%!important;
+}
+
+
+#accordion h2 {
+  font-size: 16px;
+  margin: 0px;
+  background: lightgrey;
+  color: #333;
+  font-weight: normal;
+  display: block;
+  position: relative;
+}
+
+.accordion-toggle {
+  cursor: pointer;
+}
+
+.accordion-content {
+  display: none;
+  background: #f2f2f2;
+  color: black;
+}
+
+.accordion-content.default {
+  display: block;
+}
+
+.accordion-toggle .view {
+  font-size: 14px;
+  font-weight: normal;
+  color: #7fbf34;
+  text-align: left;
+  width: 100%;
+}
+
+.arrow {
+  position: absolute;
+  right: 5px;
+}
+
+.arrowUp:before {
+  content: "-";
+  color: #333;
+}
+
+.arrowDown:before {
+  content: "+";
+  color: #333;
+}
+
+.products {
+  background: lightgrey;
+  padding: 0px;
+}
+
+#loading{
+  position: absolute;
+}
+
+#reset {
+  display: none;
+  cursor: pointer;
+  text-align: right;
+}
+
+  </style>
+</head>
+
+<body>
+
+
+ 
+
+  <div class="wrapper">
+     <h2>Filter DIV Elements</h2>
+     <div class="tab">
+      <button class="tablinks" onclick="filterTabs(event, 'reise')" id="reiseTab">Reise</button>
+      <button class="tablinks" onclick="filterTabs(event, 'gesundheit')">Gesundheit</button>
+    </div>
+
+    <div id="reise" class="tabcontent">
+      <div class="row">
+        <div class="col3">
+
+          <div id="accordion">
+
+            <h2 class="accordion-toggle"><input type="checkbox" id="checkallBranche">Branche <span class="arrow arrowDown"></span></h2>
+            <div class="accordion-content">
+              <label class="checkbox-label" for="kulturtourismus"><input type="checkbox" value="kulturtourismus" id="kulturtourismus" class="branche">Kulturtourismus</label>
+              <label class="checkbox-label" for="gesundheitsreisen"><input type="checkbox" value="gesundheitsreisen" id="gesundheitsreisen" class="branche">Gesundheitsreisen</label>
+              <label class="checkbox-label" for="fahrradtourismus"><input type="checkbox" value="fahrradtourismus" id="fahrradtourismus" class="branche">Fahrradtourismus</label>
+              <label class="checkbox-label" for="bustouristik"><input type="checkbox" value="bustouristik" id="bustouristik" class="branche">Bustouristik</label>
+              <label class="checkbox-label" for="schifftouristik"><input type="checkbox" value="schifftouristik" id="schifftouristik" class="branche">Schifftouristik</label>
+              <label class="checkbox-label" for="staedtereisen"><input type="checkbox" value="staedtereisen" id="staedtereisen" class="branche">Städtereisen</label>
+              <label class="checkbox-label" for="fernreisen"><input type="checkbox" value="fernreisen" id="fernreisen" class="branche">Fernreisen</label>
+              <label class="checkbox-label" for="pauschalreisen"><input type="checkbox" value="pauschalreisen" id="pauschalreisen" class="branche">Pauschalreisen</label>
+              <label class="checkbox-label" for="individualreisen"><input type="checkbox" value="individualreisen" id="individualreisen" class="branche">Individualreisen</label>
+              <label class="checkbox-label" for="gruppenreisen"><input type="checkbox" value="gruppenreisen" id="gruppenreisen" class="branche">Gruppenreisen</label>
+              <label class="checkbox-label" for="aktivurlaub"><input type="checkbox" value="aktivurlaub" id="aktivurlaub" class="branche">Aktivurlaub</label>
+              <label class="checkbox-label" for="abenteuerurlaub"><input type="checkbox" value="abenteuerurlaub" id="abenteuerurlaub" class="branche">Abenteuerurlaub</label>
+              <label class="checkbox-label" for="bildungsreisen"><input type="checkbox" value="bildungsreisen" id="bildungsreisen" class="branche">Bildungsreisen</label>
+            </div>
+            <h2 class="accordion-toggle"><input type="checkbox" id="checkallRegion">Regionen/Kontinente <span class="arrow arrowDown"></span></h2>
+            <div class="accordion-content">
+              <label class="checkbox-label" for="afrika"><input type="checkbox" value="afrika" id="afrika" class="region">Afrika</label>
+              <label class="checkbox-label" for="asien"><input type="checkbox" value="asien" id="asien" class="region">Asien</label>
+              <label class="checkbox-label" for="australien"><input type="checkbox" value="australien" id="australien" class="region">Australien</label>
+              <label class="checkbox-label" for="europa"><input type="checkbox" value="europa" id="europa" class="region">Europa</label>
+              <label class="checkbox-label" for="nordamerika"><input type="checkbox" value="nordamerika" id="nordamerika" class="region">Nordamerika</label>
+              <label class="checkbox-label" for="suedamerika"><input type="checkbox" value="suedamerika" id="suedamerika" class="region">Südamerika</label>
+            </div>
+            <h2 class="accordion-toggle"><input type="checkbox" id="checkallZielgruppe">Zielgruppe <span class="arrow arrowDown"></span></h2>
+            <div class="accordion-content">
+              <label class="checkbox-label" for="senioren"><input type="checkbox" value="senioren" id="senioren" class="zielgruppe">Senioren</label>
+              <label class="checkbox-label" for="familie"><input type="checkbox" value="familie" id="familie" class="zielgruppe">Familie</label>
+              <label class="checkbox-label" for="paare"><input type="checkbox" value="paare" id="paare" class="zielgruppe">Paare</label>
+              <label class="checkbox-label" for="single"><input type="checkbox" value="single" id="single" class="zielgruppe">Single</label>
+              <label class="checkbox-label" for="gay"><input type="checkbox" value="gay" id="gay" class="zielgruppe">Gay</label>
+              <label class="checkbox-label" for="studenten"><input type="checkbox" value="studenten" id="studenten" class="zielgruppe">Schüler &amp; Studenten</label>
+              <label class="checkbox-label" for="handicap"><input type="checkbox" value="handicap" id="handicap" class="zielgruppe">Handicap</label>
+            </div>
+            <h2 class="accordion-toggle"><input type="checkbox" id="checkallSaison">Saison <span class="arrow arrowDown"></span></h2>
+            <div class="accordion-content">
+              <label class="checkbox-label" for="feiertage"><input type="checkbox" value="feiertage" id="feiertage" class="saison">Feiertage</label>
+              <label class="checkbox-label" for="winter"><input type="checkbox" value="winter" id="winter" class="saison">Winter</label>
+              <label class="checkbox-label" for="fruehjahr"><input type="checkbox" value="fruehjahr" id="fruehjahr" class="saison">Frühjahr</label>
+              <label class="checkbox-label" for="sommer"><input type="checkbox" value="sommer" id="sommer" class="saison">Sommer</label>
+              <label class="checkbox-label" for="herbst"><input type="checkbox" value="herbst" id="herbst" class="saison">Herbst</label>
+              <label class="checkbox-label" for="hochzeit"><input type="checkbox" value="hochzeit" id="hochzeit" class="saison">Hochzeit</label>
+            </div>
+
+          </div> <!-- accordion End -->
+          <div id="reset" data-group="reset">reset filter?</div>
+        </div>
+        <div class="col9">
+
+          <div class="products">
+            <div data-group="kulturtourismus" class="exhibitor">Aussteller 1</div>
+            <div data-group="gesundheitsreisen" class="exhibitor">Aussteller 2</div>
+            <div data-group="fahrradtourismus australien single fruehjahr" class="exhibitor">Aussteller 3</div>
+            <div data-group="fernreisen" class="exhibitor">Aussteller 4</div>
+            <div data-group="sommer" class="exhibitor">Aussteller 5</div>
+            <div data-group="familie" class="exhibitor">Aussteller 6</div>
+            <div data-group="red blue" class="exhibitor">Aussteller 7</div>
+            <div data-group="gay sommer asien aktivurlaub" class="exhibitor">Aussteller 8</div>
+            <div data-group="australien" class="exhibitor">Aussteller 9</div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <div id="gesundheit" class="tabcontent">
+      gesundheit
+    </div>
+     
+
+
+
+
+  </div>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script>
+
+    document.getElementById("reiseTab").click();
+    
+    function filterTabs(evt, cityName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(cityName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+
+    function save() {
+      var checkboxStatus = document.getElementById('checkboxStatus');
+      localStorage.setItem('checkboxStatus', checkboxStatus.checked);
+    }
+
+
+
+
+
+
+    var checkboxesBranche = document.querySelectorAll('input.branche'),
+    checkallBranche = document.getElementById('checkallBranche');
+
+    for(var i=0; i<checkboxesBranche.length; i++) {
+        checkboxesBranche[i].onclick = function() {
+            var checkedCount = document.querySelectorAll('input.branche:checked').length;
+            checkallBranche.checked = checkedCount > 0;
+            checkallBranche.checked = checkedCount > 0 && checkedCount < checkboxesBranche.length;
+        }
+    }
+    checkallBranche.onclick = function() {
+        for(var i=0; i<checkboxesBranche.length; i++) {
+            checkboxesBranche[i].checked = this.checked;
+        }
+    }
+
+
+
+
+    var checkboxesRegion = document.querySelectorAll('input.region'),
+    checkallRegion = document.getElementById('checkallRegion');
+
+    for(var i=0; i<checkboxesRegion.length; i++) {
+        checkboxesRegion[i].onclick = function() {
+            var checkedCount = document.querySelectorAll('input.region:checked').length;
+            checkallRegion.checked = checkedCount > 0;
+            checkallRegion.checked = checkedCount > 0 && checkedCount < checkboxesRegion.length;
+        }
+    }
+    checkallRegion.onclick = function() {
+        for(var i=0; i<checkboxesRegion.length; i++) {
+            checkboxesRegion[i].checked = this.checked;
+        }
+    }
+
+
+
+
+    var checkboxesZielgruppe = document.querySelectorAll('input.zielgruppe'),
+    checkallZielgruppe = document.getElementById('checkallZielgruppe');
+
+    for(var i=0; i<checkboxesZielgruppe.length; i++) {
+        checkboxesZielgruppe[i].onclick = function() {
+            var checkedCount = document.querySelectorAll('input.zielgruppe:checked').length;
+            checkallZielgruppe.checked = checkedCount > 0;
+            checkallZielgruppe.checked = checkedCount > 0 && checkedCount < checkboxesZielgruppe.length;
+        }
+    }
+    checkallZielgruppe.onclick = function() {
+        for(var i=0; i<checkboxesZielgruppe.length; i++) {
+            checkboxesZielgruppe[i].checked = this.checked;
+        }
+    }
+
+
+
+
+    var checkboxesSaison = document.querySelectorAll('input.saison'),
+    checkallSaison = document.getElementById('checkallSaison');
+
+    for(var i=0; i<checkboxesSaison.length; i++) {
+        checkboxesSaison[i].onclick = function() {
+            var checkedCount = document.querySelectorAll('input.saison:checked').length;
+            checkallSaison.checked = checkedCount > 0;
+            checkallSaison.checked = checkedCount > 0 && checkedCount < checkboxesSaison.length;
+        }
+    }
+    checkallSaison.onclick = function() {
+        for(var i=0; i<checkboxesSaison.length; i++) {
+            checkboxesSaison[i].checked = this.checked;
+        }
+    }
+
+
+
+
+    var formValues = JSON.parse(localStorage.getItem('formValues')) || {};
+    var $checkboxes = $('input[type="checkbox"]');
+
+    function updateStorage(){
+      $checkboxes.each(function(){
+        formValues[this.id] = this.checked;
+      });
+      localStorage.setItem("formValues", JSON.stringify(formValues));      
+    }
+
+    $checkboxes.on("change", function(){
+      updateStorage();
+    });
+
+    var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {},
+    $checkboxes = $('input[type="checkbox"]');
+
+    $checkboxes.on("change", function(){
+      $checkboxes.each(function(){
+        checkboxValues[this.id] = this.checked;
+      });
+      localStorage.setItem("checkboxValues", JSON.stringify(checkboxValues));
+    });
+
+
+
+
+
+
+    $.each(checkboxValues, function(key, value) {
+      $("#" + key).prop('checked', value);
+      if ($('input[type="checkbox"]:checked').length > 0) {
+        $('.products > div').hide();
+        $('input[type="checkbox"]:checked').each(function() {
+          $('div[data-group*=' + this.value + ']').fadeIn();
+          $('#reset').fadeIn();
+        });
+
+      } else {
+        $('.products > div').fadeIn();
+        $('#reset').hide();
+      }
+    });
+
+
+
+
+
+
+    $('input[type="checkbox"]').click(function() {
+      if ($('input[type="checkbox"]:checked').length > 0) {
+        $('.products > div').hide();
+
+        $('input[type="checkbox"]:checked').each(function() {
+          $('div[data-group*=' + this.value + ']').fadeIn();
+          $('#reset').fadeIn();
+        });
+      } else {
+        $('.products > div').fadeIn();
+      }
+    });
+
+
+
+
+
+
+
+    $('#reset').click(function() {
+      $('input[type=checkbox]:checked').each(function() { 
+        this.checked = false; 
+        $('.accordion-content').slideUp('fast');
+        if( $('.accordion-toggle').find('.arrow').hasClass('arrowUp')){
+          $('.accordion-toggle').find('.arrow').removeClass('arrowUp').addClass('arrowDown');
+        }
+        $('.products > div').fadeIn();
+        $('#checkallBranche').prop('checked', false);
+        $('#checkallRegion').prop('checked', false);
+        $('#checkallZielgruppe').prop('checked', false);
+        $('#checkallSaison').prop('checked', false);
+        $('#reset').fadeOut();
+        localStorage.clear();
+      });
+    });
+
+
+
+
+//     $("#reset").html(function() {
+//     return $('input[type=checkbox]:checked').map(function() {
+//                return this.nextSibling.nodeValue;
+//            }).get().join();
+// });
+
+
+    $('#accordion').find('.accordion-toggle').click(function() {
+      $(this).next().slideToggle('fast');
+      if( $(this).find('.arrow').hasClass('arrowUp')){
+        $(this).find('.arrow').removeClass('arrowUp').addClass('arrowDown');
+      } else {
+        $('#accordion').find('.arrow').removeClass('arrowUp').addClass('arrowDown');
+        $(this).find('.arrow').removeClass('arrowDown').addClass('arrowUp');
+      }
+      $(".accordion-content").not($(this).next()).slideUp('fast');
+    });
+  </script>
+</body>
+</html>
